@@ -1,6 +1,8 @@
 import { FirecrackerCard } from '@gamepark/dragon-bomb/material/FirecrackerCard'
+import { LocationType } from '@gamepark/dragon-bomb/material/LocationType'
 import { MaterialType } from '@gamepark/dragon-bomb/material/MaterialType'
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import back from '../images/cards/firecracker/FirecrackerBack.jpg'
 import doubleFirecracker1 from '../images/cards/firecracker/DoubleFirecracker_1.jpg'
 import doubleFirecracker2 from '../images/cards/firecracker/DoubleFirecracker_2.jpg'
@@ -104,6 +106,10 @@ class FirecrackerCardDescription extends CardDescription<number, MaterialType, n
   }
 
   backImage = back
+
+  canShortClick(move: MaterialMove, context: ItemContext): boolean {
+    return isMoveItemType(MaterialType.FirecrackerCard)(move) && move.itemIndex === context.index && move.location.type === LocationType.SelectionArea
+  }
 }
 
 export const firecrackerCardDescription = new FirecrackerCardDescription()

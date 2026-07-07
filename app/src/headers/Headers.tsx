@@ -1,7 +1,7 @@
 import { RuleId } from '@gamepark/dragon-bomb/rules/RuleId'
 import { ComponentType } from 'react'
-import { TheFirstStepHeader } from './TheFirstStepHeader'
+import { ChooseFirecrackerHeader } from './ChooseFirecrackerHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.TheFirstStep]: TheFirstStepHeader
+  [RuleId.ChooseFirecracker]: ChooseFirecrackerHeader
 }

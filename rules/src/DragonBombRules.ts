@@ -11,8 +11,9 @@ import {
 import { dragonRowStrategy } from './material/DragonRowStrategy'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
+import { ChooseFirecrackerRule } from './rules/ChooseFirecrackerRule'
+import { DistributeRule } from './rules/DistributeRule'
 import { RuleId } from './rules/RuleId'
-import { TheFirstStepRule } from './rules/TheFirstStepRule'
 
 /**
  * This class implements the rules of the board game.
@@ -25,7 +26,8 @@ export class DragonBombRules
     CompetitiveScore<MaterialGame<number, MaterialType, LocationType, RuleId>, MaterialMove<number, MaterialType, LocationType, RuleId>, number>
 {
   rules = {
-    [RuleId.TheFirstStep]: TheFirstStepRule,
+    [RuleId.ChooseFirecracker]: ChooseFirecrackerRule,
+    [RuleId.Distribute]: DistributeRule
   }
 
   hidingStrategies = {

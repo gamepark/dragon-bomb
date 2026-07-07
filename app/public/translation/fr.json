@@ -1,1 +1,28 @@
-{}
+{
+  "player.id": "Couleur",
+  "player.1": "Bleu",
+  "player.2": "Rouge",
+  "player.3": "Vert",
+  "player.4": "Jaune",
+  "player.5": "Violet",
+  "player.6": "Orange",
+
+  "header.choose-firecracker.mine": "Choisissez une carte Pétard et placez-la face cachée",
+  "header.choose-firecracker.others": "Les joueurs choisissent une carte Pétard",
+  "header.distribute.mine": "Choisissez un emplacement pour votre Fusée",
+  "header.distribute.others": "Les joueurs placent leur Fusée",
+
+  "help.dragon-card.title": "Carte Corps de Dragon",
+  "help.dragon-card.decoration.title": "Carte Dragon",
+  "help.dragon-card.decoration.desc": "Marque le début ou la fin du corps du dragon. Cette carte ne joue aucun rôle dans les règles.",
+  "help.dragon-card.vitality": "Points de vitalité : {vitality}. La somme des puissances des Pétards posés sous cette carte doit atteindre ou dépasser cette valeur pour faire exploser le dragon.",
+  "help.dragon-card.points": "Rapporte {points} points de victoire si vous la capturez.",
+  "help.dragon-card.malus": "« 4 » signifie « malchance » en chinois : capturer cette carte vous fait perdre des points.",
+  "help.dragon-card.hand-limit-bonus": "Capturer cette carte augmente de 1 votre limite de cartes en main jusqu'à la fin de la manche.",
+
+  "help.firecracker-card.title": "Carte Pétard",
+  "help.firecracker-card.power": "Valeur de puissance : {power}.",
+  "help.firecracker-card.string": "Chapelet de pétards : lorsque vous jouez cette carte, piochez une carte Pétard et ajoutez sa valeur à la puissance totale. Si la carte piochée est elle-même spéciale, son effet n'est pas activé.",
+  "help.firecracker-card.rocket": "Fusée : vous la placerez en dernier, sous n'importe quel corps de dragon encore présent.",
+  "help.firecracker-card.double": "Double pétard : si les points de vitalité sont atteints, vous doublez les points de victoire de la carte Dragon obtenue."
+}

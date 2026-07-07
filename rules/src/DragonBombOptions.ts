@@ -1,10 +1,9 @@
-import { getEnumValues, OptionsSpec } from '@gamepark/rules-api'
-import { PlayerColor } from './PlayerColor'
+import { OptionsSpec } from '@gamepark/rules-api'
 
 /**
  * This is the options for each player in the game.
  */
-type PlayerOptions = { id: PlayerColor }
+type PlayerOptions = { id: number }
 
 /**
  * This is the type of object that the game receives when a new game is started.
@@ -22,8 +21,9 @@ export const DragonBombOptionsSpec: OptionsSpec<DragonBombOptions> = {
   players: {
     id: {
       label: (t) => t('player.id'),
-      values: getEnumValues(PlayerColor),
+      values: [1, 2, 3, 4, 5, 6],
       valueSpec: (id) => ({ label: (t) => t(`player.${id}`) })
     }
-  }
+  },
+  competitivePlayers: { min: 2, max: 6 }
 }

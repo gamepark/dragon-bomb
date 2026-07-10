@@ -79,16 +79,16 @@ export const dragonVictoryPoints: Partial<Record<DragonCard, number>> = {
   [DragonCard.Body12a]: 3,
   [DragonCard.Body12b]: 3,
   [DragonCard.Body13]: 3,
-  [DragonCard.Body15a]: 3,
+  [DragonCard.Body15a]: 4,
   [DragonCard.Body15b]: 4,
   [DragonCard.Body16a]: 4,
   [DragonCard.Body16b]: 4,
-  [DragonCard.Body17a]: 4,
-  [DragonCard.Body17b]: 4,
-  [DragonCard.Body18a]: 4,
+  [DragonCard.Body17a]: 5,
+  [DragonCard.Body17b]: 5,
+  [DragonCard.Body18a]: 5,
   [DragonCard.Body18b]: 5,
-  [DragonCard.Body23]: 5,
-  [DragonCard.Body25]: 5
+  [DragonCard.Body23]: 7,
+  [DragonCard.Body25]: 8
 }
 
 /** "13" grants +1 hand limit (until end of round) to the player who captures it */

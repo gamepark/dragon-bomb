@@ -17,8 +17,6 @@ export enum LocationType {
   PlayerHand,
   /** Face-down staging area where a player secretly commits their Firecracker card(s) for the turn */
   SelectionArea,
-  /** Shared area where committed Firecracker cards are revealed simultaneously */
-  RevealArea,
   /** Dragon Body cards captured by a player, kept face up in front of them */
   PlayerCapturedDragon,
   /** A Double Firecracker card kept face down in front of a player, marking a captured card's doubled victory points (location.parent = index of the captured DragonCard item) */

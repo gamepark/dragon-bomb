@@ -1,9 +1,3 @@
-import { usePlayerId, useRules } from '@gamepark/react-game'
-import { Trans } from 'react-i18next'
+import { HeaderText } from '@gamepark/react-game'
 
-export const ChooseFirecrackerHeader = () => {
-  const player = usePlayerId()
-  const rules = useRules()!
-  const isMyTurn = player !== undefined && rules.isTurnToPlay(player)
-  return <Trans i18nKey={`header.choose-firecracker.${isMyTurn ? 'mine' : 'others'}`} />
-}
+export const ChooseFirecrackerHeader = () => <HeaderText code="choose-firecracker" />

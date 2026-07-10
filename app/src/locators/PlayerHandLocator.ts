@@ -3,7 +3,7 @@ import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { getColumnCenterX, OPPONENT_SCALE, ROW_Y } from './PlayerRowLayout'
 
 class PlayerHandLocator extends HandLocator {
-  getCoordinates(location: Location, context: MaterialContext): Coordinates {
+  getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const playerIndex = getRelativePlayerIndex(context, location.player)
     const playerCount = context.rules.players.length
     return { x: getColumnCenterX(playerIndex, playerCount), y: ROW_Y }

@@ -1,23 +1,24 @@
-import { ItemContext, MaterialContext, PileLocator } from '@gamepark/react-game'
+import { DeckLocator, getRelativePlayerIndex, ItemContext, MaterialContext } from '@gamepark/react-game'
 import { Location, MaterialItem } from '@gamepark/rules-api'
-import { playerCapturedDragonLocator } from './PlayerCapturedDragonLocator'
+import { playerHandLocator } from './PlayerHandLocator.ts'
+import { CAPTURED_X_OFFSET, OPPONENT_SCALE } from './PlayerRowLayout.ts'
 
-class PlayerDoubleMarkerLocator extends PileLocator {
-  radius = 1
+class PlayerDoubleMarkerLocator extends DeckLocator {
 
   getCoordinates(location: Location, context: MaterialContext) {
-    const base = playerCapturedDragonLocator.getCoordinates(location, context)
-    const scale = playerCapturedDragonLocator.getScale(location, context)
-    return { x: (base.x ?? 0) + 6 * scale, y: base.y }
+    const hand = playerHandLocator.getCoordinates(location, context)
+    const scale = this.getScale(location, context)
+    return { y: hand.y, x: (hand.x ?? 0) - CAPTURED_X_OFFSET * scale }
   }
 
-  getRadius(location: Location, context: MaterialContext) {
-    return this.radius * playerCapturedDragonLocator.getScale(location, context)
+  getScale(location: Location, context: MaterialContext): number {
+    const playerIndex = getRelativePlayerIndex(context, location.player)
+    return playerIndex === 0 ? 1 : OPPONENT_SCALE
   }
 
   placeItem(item: MaterialItem, context: ItemContext) {
     const transform = super.placeItem(item, context)
-    const scale = playerCapturedDragonLocator.getScale(item.location, context)
+    const scale = this.getScale(item.location, context)
     if (scale !== 1) transform.push(`scale(${scale})`)
     return transform
   }

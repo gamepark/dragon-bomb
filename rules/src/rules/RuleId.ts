@@ -1,4 +1,9 @@
 export enum RuleId {
   ChooseFirecracker = 1,
-  Distribute
+  Distribute,
+  PlaceRocket,
+  Explosion,
+  CompleteDragonRow,
+  CompletePlayersHands,
+  EndOfRound
 }

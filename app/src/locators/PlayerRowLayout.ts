@@ -46,4 +46,4 @@ export const ROW_Y = 25
 export const SELECTION_Y_OFFSET = 12
 
 /** y offset (from ROW_Y) of the captured dragons / double markers, pulled toward the table center. */
-export const CAPTURED_Y_OFFSET = 12
+export const CAPTURED_X_OFFSET = 12

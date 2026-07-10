@@ -1,16 +1,11 @@
 import { OptionsSpec } from '@gamepark/rules-api'
 
 /**
- * This is the options for each player in the game.
- */
-type PlayerOptions = { id: number }
-
-/**
  * This is the type of object that the game receives when a new game is started.
  * The first generic parameter, "{}", can be changed to include game options like variants or expansions.
  */
 export type DragonBombOptions = {
-  players: PlayerOptions[]
+  players: number
 }
 
 /**
@@ -18,12 +13,5 @@ export type DragonBombOptions = {
  * (forms for friendly games, or forms for matchmaking preferences, for instance).
  */
 export const DragonBombOptionsSpec: OptionsSpec<DragonBombOptions> = {
-  players: {
-    id: {
-      label: (t) => t('player.id'),
-      values: [1, 2, 3, 4, 5, 6],
-      valueSpec: (id) => ({ label: (t) => t(`player.${id}`) })
-    }
-  },
   competitivePlayers: { min: 2, max: 6 }
 }

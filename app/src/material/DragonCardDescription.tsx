@@ -1,6 +1,7 @@
 import { DragonCard } from '@gamepark/dragon-bomb/material/DragonCard'
 import { MaterialType } from '@gamepark/dragon-bomb/material/MaterialType'
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, MaterialContentProps } from '@gamepark/react-game'
+import { DragonCardPowerBadge } from './DragonCardPowerBadge'
 import back from '../images/cards/dragon/DragonBack.jpg'
 import body3 from '../images/cards/dragon/DragonBody3.jpg'
 import body4a from '../images/cards/dragon/DragonBody4a.jpg'
@@ -56,6 +57,9 @@ class DragonCardDescription extends CardDescription<number, MaterialType, number
   }
 
   backImage = back
+
+  content = (props: MaterialContentProps<DragonCard>) =>
+    this.contentWithBackChildren({ ...props, children: <DragonCardPowerBadge itemIndex={props.itemIndex} /> })
 }
 
 export const dragonCardDescription = new DragonCardDescription()

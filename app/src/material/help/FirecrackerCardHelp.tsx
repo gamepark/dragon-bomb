@@ -9,10 +9,27 @@ export const FirecrackerCardHelp = ({ item }: MaterialHelpProps) => {
   return (
     <>
       <h2><Trans i18nKey="help.firecracker-card.title" /></h2>
+      <p><Trans i18nKey="help.firecracker-card.role" /></p>
       {power !== undefined && <p><Trans i18nKey="help.firecracker-card.power" values={{ power }} /></p>}
-      {id !== undefined && isStringOfFirecrackers(id) && <p><Trans i18nKey="help.firecracker-card.string" /></p>}
-      {id !== undefined && isRocket(id) && <p><Trans i18nKey="help.firecracker-card.rocket" /></p>}
-      {id !== undefined && isDoubleFirecracker(id) && <p><Trans i18nKey="help.firecracker-card.double" /></p>}
+      <p><Trans i18nKey="help.firecracker-card.order" /></p>
+      {id !== undefined && isStringOfFirecrackers(id) && (
+        <>
+          <h3><Trans i18nKey="help.firecracker-card.string.title" /></h3>
+          <p><Trans i18nKey="help.firecracker-card.string" /></p>
+        </>
+      )}
+      {id !== undefined && isRocket(id) && (
+        <>
+          <h3><Trans i18nKey="help.firecracker-card.rocket.title" /></h3>
+          <p><Trans i18nKey="help.firecracker-card.rocket" /></p>
+        </>
+      )}
+      {id !== undefined && isDoubleFirecracker(id) && (
+        <>
+          <h3><Trans i18nKey="help.firecracker-card.double.title" /></h3>
+          <p><Trans i18nKey="help.firecracker-card.double" /></p>
+        </>
+      )}
     </>
   )
 }

@@ -9,6 +9,7 @@ export const DragonCardHelp = ({ item }: MaterialHelpProps) => {
       <>
         <h2><Trans i18nKey="help.dragon-card.decoration.title" /></h2>
         <p><Trans i18nKey="help.dragon-card.decoration.desc" /></p>
+        <p><Trans i18nKey="help.dragon-card.decoration.zone" /></p>
       </>
     )
   }
@@ -20,10 +21,13 @@ export const DragonCardHelp = ({ item }: MaterialHelpProps) => {
   return (
     <>
       <h2><Trans i18nKey="help.dragon-card.title" /></h2>
+      <p><Trans i18nKey="help.dragon-card.role" /></p>
       {vitality !== undefined && <p><Trans i18nKey="help.dragon-card.vitality" values={{ vitality }} /></p>}
+      <p><Trans i18nKey="help.dragon-card.explosion" /></p>
       {points !== undefined && <p><Trans i18nKey="help.dragon-card.points" values={{ points }} /></p>}
       {points !== undefined && points < 0 && <p><Trans i18nKey="help.dragon-card.malus" /></p>}
       {handLimitBonus !== undefined && <p><Trans i18nKey="help.dragon-card.hand-limit-bonus" /></p>}
+      <p><Trans i18nKey="help.dragon-card.refill" /></p>
     </>
   )
 }

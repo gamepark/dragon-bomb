@@ -1,8 +1,10 @@
 import { css } from '@emotion/react'
 import { DragonBombRules } from '@gamepark/dragon-bomb/DragonBombRules'
 import { StyledPlayerPanel, usePlayers, useRules } from '@gamepark/react-game'
+import { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import lanterne from '../images/lanterne.png'
+import { playerColors } from '../theme/playerColors'
 
 export const PlayerPanels = () => {
   const rules = useRules<DragonBombRules>()!
@@ -19,6 +21,7 @@ export const PlayerPanels = () => {
           key={player.id}
           player={player}
           css={panelPosition(index)}
+          style={playerColorVars(player.id)}
           activeRing
           mainCounter={{ image: lanterne, value: rules.getScore(player.id) }}
         />
@@ -26,6 +29,11 @@ export const PlayerPanels = () => {
     </>,
     root
   )
+}
+
+const playerColorVars = (playerId: number): CSSProperties => {
+  const { accent, background } = playerColors[(playerId - 1) % playerColors.length]
+  return { '--player-accent': accent, '--player-bg': background } as CSSProperties
 }
 
 const panelPosition = (index: number) => css`

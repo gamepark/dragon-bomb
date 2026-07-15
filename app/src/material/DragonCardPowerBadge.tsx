@@ -4,6 +4,8 @@ import { FirecrackerCard, firecrackerPower } from '@gamepark/dragon-bomb/materia
 import { LocationType } from '@gamepark/dragon-bomb/material/LocationType'
 import { MaterialType } from '@gamepark/dragon-bomb/material/MaterialType'
 import { useRules } from '@gamepark/react-game'
+import { colors } from '../theme/colors'
+import { fontDisplay } from '../theme/typography'
 
 /** Total power of the Firecracker cards currently stacked in this Dragon card's Bombing Zone. */
 export const DragonCardPowerBadge = ({ itemIndex }: { itemIndex?: number }) => {
@@ -26,12 +28,13 @@ const badgeCss = css`
   left: 50%;
   transform: translateX(-50%);
   padding: 0.05em 0.5em;
-  background: rgba(0, 0, 0, 0.8);
-  border: 0.08em solid white;
+  background: ${colors.dusk};
+  border: 0.08em solid ${colors.gold};
   border-radius: 1em;
   font-size: 1.3em;
+  font-family: ${fontDisplay};
   font-weight: bold;
-  color: white;
+  color: ${colors.ash};
   line-height: 1.4;
   white-space: nowrap;
 `

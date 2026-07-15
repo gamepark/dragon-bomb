@@ -15,6 +15,12 @@
   "header.complete-players-hands": "Les joueurs complètent leur main de cartes Pétard",
   "header.end-of-round": "Fin de la manche : les scores sont comptabilisés",
 
+  "log.reveal-firecracker": "{player} choisit <card/>",
+  "log.place-firecracker": "<card/> se place sous le corps de dragon ({vitality})",
+  "log.place-rocket": "{player} place sa <card/> sous le corps de dragon ({vitality})",
+  "log.chapelet-bonus": "Chapelet de pétards : une carte supplémentaire est piochée <card/>",
+  "log.explosion": "{player} fait exploser le corps de dragon et remporte <card/> ({points} points)",
+
   "help.dragon-card.title": "Carte Corps de Dragon",
   "help.dragon-card.decoration.title": "Carte Dragon",
   "help.dragon-card.decoration.desc": "Marque le début ou la fin du corps du dragon. Cette carte ne joue aucun rôle dans les règles.",

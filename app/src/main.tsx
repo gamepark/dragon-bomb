@@ -7,6 +7,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
 import { App } from './App'
+import { DragonBombLogDescription } from './logs/DragonBombLogDescription'
 import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
 import { DragonBombRuleHelp } from './material/help/DragonBombRuleHelp'
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
       locators={Locators}
       animations={gameAnimations}
       rulesHelp={{ [RuleId.ChooseFirecracker]: DragonBombRuleHelp }}
+      logs={new DragonBombLogDescription()}
       theme={theme}
     >
       <App />

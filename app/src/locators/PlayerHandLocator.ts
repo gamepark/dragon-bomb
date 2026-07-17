@@ -38,6 +38,11 @@ class PlayerHandLocator extends HandLocator {
     return transform
   }
 
+  /** Hand sits at the bottom of the table: lift hovered cards up so the 2x zoom doesn't push them off screen. */
+  getHoverTransform(item: MaterialItem, context: ItemContext): string[] {
+    return ['translateZ(10em)', 'translateY(-4em)', `rotateZ(${-this.getItemRotateZ(item, context)}${this.rotationUnit})`, 'scale(2)']
+  }
+
   getPositionDependencies(_location: Location, context: MaterialContext) {
     return { players: context.rules.players.length, viewer: context.player }
   }

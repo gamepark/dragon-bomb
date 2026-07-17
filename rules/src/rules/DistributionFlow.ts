@@ -16,13 +16,24 @@ type Rules = MaterialRulesPart<number, MaterialType, LocationType, RuleId>
 export function nextDistributionStep(rules: Rules): MaterialMove[] {
   const rank = rules.remind<number>(Memory.NextRank) ?? 0
   const nextPlayer = rules.remind<number[]>(Memory.PlacementPlayers)?.[rank]
-  if (nextPlayer !== undefined) return [rules.startPlayerTurn(RuleId.Distribute, nextPlayer)]
+  if (nextPlayer !== undefined) return [startOrContinuePlayerTurn(rules, RuleId.Distribute, nextPlayer)]
 
   const rocketRank = rules.remind<number>(Memory.NextRocketRank) ?? 0
   const nextRocketPlayer = rules.remind<number[]>(Memory.RocketPlayers)?.[rocketRank]
-  if (nextRocketPlayer !== undefined) return [rules.startPlayerTurn(RuleId.PlaceRocket, nextRocketPlayer)]
+  if (nextRocketPlayer !== undefined) return [startOrContinuePlayerTurn(rules, RuleId.PlaceRocket, nextRocketPlayer)]
 
   return [rules.startRule(RuleId.CompleteDragonRow)]
+}
+
+/**
+ * startPlayerTurn must not be used when the active player doesn't change (it breaks undo) - see
+ * https://gamepark.github.io. In a 2-player game a player commits 2 cards, so the next entry in
+ * PlacementOrder/RocketOrder can belong to the same player who is already active (e.g. their two
+ * cards land next to each other in the sorted placement order): fall back to startRule then.
+ */
+function startOrContinuePlayerTurn(rules: Rules, ruleId: RuleId, player: number): MaterialMove {
+  if (rules instanceof PlayerTurnRule && rules.player === player) return rules.startRule(ruleId)
+  return rules.startPlayerTurn(ruleId, player)
 }
 
 /** Shared by DistributeRule and PlaceRocketRule: check a slot's total power against its Dragon card's vitality. */
@@ -38,5 +49,7 @@ export function resolveSlot(rules: PlayerTurnRule<number, MaterialType, Location
   if (totalPower < vitality) return nextDistributionStep(rules)
 
   rules.memorize(Memory.ExplodingSlot, slotIndex)
-  return [rules.startPlayerTurn(RuleId.Explosion, rules.player)]
+  // Same player who just placed the triggering card resolves the explosion: startRule (not
+  // startPlayerTurn, which would break undo since the active player doesn't change here).
+  return [rules.startRule(RuleId.Explosion)]
 }

@@ -4,6 +4,7 @@ import { playerHandLocator } from './PlayerHandLocator.ts'
 import { CAPTURED_X_OFFSET, OPPONENT_SCALE } from './PlayerRowLayout.ts'
 
 class PlayerDoubleMarkerLocator extends DeckLocator {
+  limit = 20
 
   getCoordinates(location: Location, context: MaterialContext) {
     const hand = playerHandLocator.getCoordinates(location, context)

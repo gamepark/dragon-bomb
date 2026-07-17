@@ -35,7 +35,7 @@ export class ExplosionRule extends PlayerTurnRule {
     this.memorize<number>(Memory.Score, (previousScore: number = 0) => previousScore + (doubled ? points * 2 : points), this.player)
 
     return [
-      ...otherCards.moveItems({ type: LocationType.FirecrackerDiscard }),
+      ...(otherCards.length ? [otherCards.moveItemsAtOnce({ type: LocationType.FirecrackerDiscard })] : []),
       ...(doubleCard?.moveItems({ type: LocationType.PlayerDoubleMarker, player: this.player, parent: slotIndex }) ?? []),
       ...dragonCard.moveItems({ type: LocationType.PlayerCapturedDragon, player: this.player }),
       ...nextDistributionStep(this)

@@ -59,7 +59,15 @@ class DragonCardDescription extends CardDescription<number, MaterialType, number
   backImage = back
 
   content = (props: MaterialContentProps<DragonCard>) =>
-    this.contentWithBackChildren({ ...props, children: <DragonCardPowerBadge itemIndex={props.itemIndex} /> })
+    this.contentWithBackChildren({
+      ...props,
+      children: (
+        <>
+          {props.children}
+          <DragonCardPowerBadge itemIndex={props.itemIndex} />
+        </>
+      )
+    })
 }
 
 export const dragonCardDescription = new DragonCardDescription()

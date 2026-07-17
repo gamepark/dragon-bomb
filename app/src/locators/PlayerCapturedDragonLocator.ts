@@ -4,6 +4,7 @@ import { playerHandLocator } from './PlayerHandLocator'
 import { CAPTURED_X_OFFSET, OPPONENT_SCALE } from './PlayerRowLayout'
 
 class PlayerCapturedDragonLocator extends DeckLocator {
+  limit = 20
 
   getCoordinates(location: Location, context: MaterialContext) {
     const hand = playerHandLocator.getCoordinates(location, context)

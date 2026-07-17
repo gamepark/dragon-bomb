@@ -3,6 +3,7 @@ import { Coordinates, Location } from '@gamepark/rules-api'
 import { firecrackerDeckLocator } from './FirecrackerDeckLocator.ts'
 
 class FirecrackerDiscardLocator extends DeckLocator {
+  limit = 20
 
   getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
     const deck = firecrackerDeckLocator.getCoordinates(_location, context)

@@ -1,17 +1,22 @@
 import { getRelativePlayerIndex, HandLocator, ItemContext, MaterialContext } from '@gamepark/react-game'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
-import { getColumnCenterX, OPPONENT_SCALE, ROW_Y } from './PlayerRowLayout'
+import { getOpponentRowY, getPanelRowY, isSoloOpponent, MY_HAND_X, OPPONENT_SCALE, PANEL_COLUMN_X, SOLO_OPPONENT_HAND_Y_OFFSET } from './PlayerRowLayout'
 
 class PlayerHandLocator extends HandLocator {
   getCoordinates(location: Location, context: MaterialContext): Partial<Coordinates> {
     const playerIndex = getRelativePlayerIndex(context, location.player)
-    const playerCount = context.rules.players.length
-    return { x: getColumnCenterX(playerIndex, playerCount), y: ROW_Y }
+    if (playerIndex === 0) {
+      return { x: MY_HAND_X, y: getOpponentRowY(playerIndex) }
+    }
+    if (isSoloOpponent(playerIndex, context)) {
+      return { x: PANEL_COLUMN_X, y: getPanelRowY(playerIndex, context) - SOLO_OPPONENT_HAND_Y_OFFSET }
+    }
+    return { x: PANEL_COLUMN_X, y: getOpponentRowY(playerIndex) }
   }
 
   getScale(location: Location, context: MaterialContext): number {
     const playerIndex = getRelativePlayerIndex(context, location.player)
-    return playerIndex === 0 ? 1 : OPPONENT_SCALE
+    return playerIndex === 0 || isSoloOpponent(playerIndex, context) ? 1 : OPPONENT_SCALE
   }
 
   getBaseAngle(): number {
@@ -24,11 +29,15 @@ class PlayerHandLocator extends HandLocator {
 
   getGapMaxAngle(location: Location, context: MaterialContext): number {
     const playerIndex = getRelativePlayerIndex(context, location.player)
-    return playerIndex === 0 ? this.gapMaxAngle / 2 : 1
+    return playerIndex === 0 || isSoloOpponent(playerIndex, context) ? this.gapMaxAngle / 2 : 1
   }
 
   getRadius(location: Location, context: MaterialContext): number {
-    return this.radius * this.getScale(location, context)
+    const playerIndex = getRelativePlayerIndex(context, location.player)
+    const radius = this.radius * this.getScale(location, context)
+    // Opponents' hand is hidden under their panel: keep the fan tight so it doesn't spill out past its edges.
+    // (Except the sole opponent in a 2-player game, shown full-size above their panel instead.)
+    return playerIndex === 0 || isSoloOpponent(playerIndex, context) ? radius : radius * 0.4
   }
 
   placeItem(item: MaterialItem, context: ItemContext) {

@@ -11,6 +11,7 @@ import { firecrackerDiscardLocator } from './FirecrackerDiscardLocator'
 import { playerCapturedDragonLocator } from './PlayerCapturedDragonLocator'
 import { playerDoubleMarkerLocator } from './PlayerDoubleMarkerLocator'
 import { playerHandLocator } from './PlayerHandLocator'
+import { playerPanelLocator } from './PlayerPanelLocator'
 import { selectionAreaLocator } from './SelectionAreaLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<number, MaterialType, LocationType>>> = {
@@ -24,5 +25,6 @@ export const Locators: Partial<Record<LocationType, Locator<number, MaterialType
   [LocationType.PlayerHand]: playerHandLocator,
   [LocationType.SelectionArea]: selectionAreaLocator,
   [LocationType.PlayerCapturedDragon]: playerCapturedDragonLocator,
-  [LocationType.PlayerDoubleMarker]: playerDoubleMarkerLocator
+  [LocationType.PlayerDoubleMarker]: playerDoubleMarkerLocator,
+  [LocationType.PlayerPanel]: playerPanelLocator
 }

@@ -20,5 +20,7 @@ export enum LocationType {
   /** Dragon Body cards captured by a player, kept face up in front of them */
   PlayerCapturedDragon,
   /** A Double Firecracker card kept face down in front of a player, marking a captured card's doubled victory points (location.parent = index of the captured DragonCard item) */
-  PlayerDoubleMarker
+  PlayerDoubleMarker,
+  /** UI-only: a player's info panel (avatar, name, score), displayed as part of the table so it scales with it (location.player = the player it belongs to) */
+  PlayerPanel
 }

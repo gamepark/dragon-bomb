@@ -1,49 +1,77 @@
+import { MaterialContext } from '@gamepark/react-game'
+
 /**
- * All 6 players sit on a single row at the bottom of the table. My own column
- * (relative index 0, see `getRelativePlayerIndex`) is always the biggest one;
- * opponents are smaller and ordered left to right by seat, ending right before
- * my column, so everyone fits on screen regardless of player count.
+ * Every player's hand/captured pile/selection sits next to their own panel, in a column near the
+ * table's right edge (one row per player, see PlayerPanelLocator). Mine (relative index 0, see
+ * `getRelativePlayerIndex`) stays full size and to the left of my panel instead of hidden under it.
  */
-
-const TABLE_WIDTH = 100
-
-const BIG_WIDTH = 40
 
 /** Scale applied to opponents' material (card size, hand radius), regardless of player count. */
 export const OPPONENT_SCALE = 0.5
 
-/** Left-to-right order of relative player indexes. Fixed for the whole game (no recentering). */
-export function getSlotOrder(playerCount: number): number[] {
-  const opponents = Array.from({ length: playerCount - 1 }, (_, i) => i + 1)
-  return [0, ...opponents]
-}
+/** x of my own hand: shifted left so it (and the selection area above it) sits under the dragon head card. */
+export const MY_HAND_X = 12
 
-/** Column width shrinks as more opponents need to share the remaining space, capped at the size of my own column. */
-export function getColumnWidth(relativeIndex: number, playerCount: number): number {
-  if (relativeIndex === 0) return BIG_WIDTH
-  return Math.min(BIG_WIDTH, (TABLE_WIDTH - BIG_WIDTH) / (playerCount - 1))
-}
-
-/** Center x of a player's column, using a "space-around" distribution over the (uneven) column widths. */
-export function getColumnCenterX(relativeIndex: number, playerCount: number): number {
-  const order = getSlotOrder(playerCount)
-  const slot = order.indexOf(relativeIndex)
-  const widths = order.map((idx) => getColumnWidth(idx, playerCount))
-  const total = widths.reduce((sum, w) => sum + w, 0)
-  const margin = (TABLE_WIDTH - total) / (2 * order.length)
-
-  let x = -TABLE_WIDTH / 2 + margin
-  for (let i = 0; i < slot; i++) {
-    x += widths[i] + 2 * margin
-  }
-  return x + widths[slot] / 2
-}
-
-/** Common y of the row of hands, at the bottom of the table. */
-export const ROW_Y = 25
-
-/** y offset (from ROW_Y) of the selection area (card committed for the turn), just above the hand. */
+/** y offset (from my hand) of my own selection area (card committed for the turn), just above the hand. */
 export const SELECTION_Y_OFFSET = 12
 
-/** y offset (from ROW_Y) of the captured dragons / double markers, pulled toward the table center. */
-export const CAPTURED_X_OFFSET = 12
+/**
+ * Panels (see PlayerPanelLocator/PlayerPanelContent) are placed as part of the table itself (a Location,
+ * not a screen-space overlay), in a column near the table's right edge, one row per player. Opponents' hand
+ * and captured pile (hidden entirely under their panel) are placed using these same coordinates, so both
+ * always line up exactly, regardless of screen size or aspect ratio.
+ */
+export const PANEL_COLUMN_X = 46
+export const PANEL_WIDTH = 16
+export const PANEL_HEIGHT = 4
+const PANEL_ROW_Y = 19
+const PANEL_ROW_SPACING = 8
+
+/** Small upward nudge applied only to the panel itself (not the hand/captured cards it hides), so it fully covers the taller hand card underneath. */
+export const PANEL_Y_OFFSET = -0.5
+
+/** y of a player's row: mine (relative index 0) is at the bottom, each opponent one panel-slot above the previous. */
+export function getOpponentRowY(relativeIndex: number): number {
+  return PANEL_ROW_Y - relativeIndex * PANEL_ROW_SPACING
+}
+
+/**
+ * y of the sole opponent's panel row, in a 2-player game: pulled closer to mine (a smaller spacing,
+ * still with a clear gap between the two panels) to free up more room between it and the dragon row
+ * for their full-size hand and selection (see isSoloOpponent).
+ */
+const SOLO_OPPONENT_PANEL_ROW_SPACING = 7
+
+/** y of a player's panel row: same as getOpponentRowY, except for the sole opponent in a 2-player game. */
+export function getPanelRowY(playerIndex: number, context: MaterialContext): number {
+  if (isSoloOpponent(playerIndex, context)) {
+    return PANEL_ROW_Y - SOLO_OPPONENT_PANEL_ROW_SPACING
+  }
+  return getOpponentRowY(playerIndex)
+}
+
+/** x offset (from an opponent's hand) of their captured pile: nudged right, just enough for the rotated card's top edge (its point icons, not its printed value) to peek out past the panel's left edge. */
+export const OPPONENT_CAPTURED_X_OFFSET = -6.5
+
+/** Extra x gap kept between an opponent's selection area and the current leftmost edge of their (fanning) captured pile, so the two never overlap. */
+export const OPPONENT_SELECTION_CAPTURED_GAP = 7
+
+/**
+ * With only 2 players, there's a single opponent and no panel column to stack under: show their hand
+ * and selection full-size above their panel instead of hidden (scaled down) underneath it.
+ */
+export function isSoloOpponent(playerIndex: number, context: MaterialContext): boolean {
+  return playerIndex !== 0 && context.rules.players.length === 2
+}
+
+/**
+ * y offset (above its, closer-in, panel row) of the sole opponent's full-size hand, in a 2-player
+ * game: centers it with a clear gap from both the panel and the dragon row.
+ */
+export const SOLO_OPPONENT_HAND_Y_OFFSET = 9
+
+/**
+ * y offset (from the sole opponent's hand) of their selection area: most of the card peeks out
+ * clearly above the hand fan, with still a clear gap left above it to the dragon row.
+ */
+export const SOLO_OPPONENT_SELECTION_Y_OFFSET = 11

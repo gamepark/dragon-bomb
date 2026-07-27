@@ -24,6 +24,30 @@ export class DragonBombSetup extends MaterialGameSetup<number, MaterialType, Loc
   setupMaterial(_options: DragonBombOptions) {
     this.setupDragon()
     this.setupFirecrackers()
+    //this.setupDebugPlayerAreas()
+  }
+
+  /**
+   * DEBUG ONLY: gives every player 4 captured Dragon cards and 1 selected Firecracker card, so the
+   * captured pile / selection area locators can be previewed without having to actually play a round.
+   * Remove this call (and method) once the positions have been checked.
+   */
+  setupDebugPlayerAreas() {
+    const selectionCount = this.players.length === 2 ? 2 : 1
+    this.players.forEach((player, index) => {
+      this.material(MaterialType.DragonCard).createItems(
+        Array.from({ length: 4 }, (_, i) => ({
+          id: dragonBodyCards[(index * 4 + i) % dragonBodyCards.length],
+          location: { type: LocationType.PlayerCapturedDragon, player }
+        }))
+      )
+      this.material(MaterialType.FirecrackerCard).createItems(
+        Array.from({ length: selectionCount }, (_, i) => ({
+          id: firecrackerCards[(index * selectionCount + i) % firecrackerCards.length],
+          location: { type: LocationType.SelectionArea, player }
+        }))
+      )
+    })
   }
 
   setupDragon() {

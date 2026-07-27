@@ -8,7 +8,7 @@ class FirecrackerDeckLocator extends DeckLocator {
 
   getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
     const head = dragonHeadSlotLocator.getCoordinates(_location, context)
-    return { x: head.x, y: head.y - 10 }
+    return { x: head.x - 1, y: head.y - 10 }
   }
 }
 

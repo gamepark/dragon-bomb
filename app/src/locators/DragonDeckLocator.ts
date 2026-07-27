@@ -8,7 +8,7 @@ class DragonDeckLocator extends DeckLocator {
 
   getCoordinates(_location: Location, context: MaterialContext): Partial<Coordinates> {
     const tail = dragonTailSlotLocator.getCoordinates(_location, context)
-    return { x: tail.x, y: tail.y - 10 }
+    return { x: tail.x + 2, y: tail.y - 10 }
   }
 }
 

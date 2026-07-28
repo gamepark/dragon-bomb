@@ -52,8 +52,14 @@ class PlayerHandLocator extends HandLocator {
     return ['translateZ(10em)', 'translateY(-4em)', `rotateZ(${-this.getItemRotateZ(item, context)}${this.rotationUnit})`, 'scale(2)']
   }
 
-  getPositionDependencies(_location: Location, context: MaterialContext) {
-    return { players: context.rules.players.length, viewer: context.player }
+  /**
+   * The fan spreads over the number of cards in the hand (HandLocator's default dependency): keep it, or the
+   * cards already in hand would only re-spread once the animation of the card being dealt is over (react-game
+   * animates the other items of a move only when their position dependencies change, see
+   * ItemAnimations.computeSiblingAnimation). The viewer matters too, since the hand is placed relatively to them.
+   */
+  getPositionDependencies(location: Location, context: MaterialContext) {
+    return { cards: this.countItems(location, context), viewer: context.player }
   }
 }
 

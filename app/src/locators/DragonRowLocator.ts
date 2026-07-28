@@ -1,6 +1,6 @@
 import { ListLocator, MaterialContext } from '@gamepark/react-game'
 import { Location } from '@gamepark/rules-api'
-import { dragonRowGap, dragonRowY, getDragonRowStartX, getRowSize } from './rowSize'
+import { dragonRowGap, dragonRowY, getDragonRowStartX } from './rowSize'
 
 /**
  * Do NOT override getPositionDependencies here: ListLocator's default (the number of cards in the row)
@@ -16,8 +16,7 @@ class DragonRowLocator extends ListLocator {
   gap = { x: dragonRowGap }
 
   getCoordinates(_location: Location, context: MaterialContext) {
-    const rowSize = getRowSize(context.rules.players.length)
-    return { x: getDragonRowStartX(rowSize), y: dragonRowY }
+    return { x: getDragonRowStartX(context.rules.players.length), y: dragonRowY }
   }
 }
 

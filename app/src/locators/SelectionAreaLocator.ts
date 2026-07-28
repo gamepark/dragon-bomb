@@ -4,6 +4,7 @@ import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { playerCapturedDragonLocator } from './PlayerCapturedDragonLocator'
 import { playerHandLocator } from './PlayerHandLocator'
 import {
+  getPanelRowY,
   isSoloOpponent,
   OPPONENT_SCALE,
   OPPONENT_SELECTION_CAPTURED_GAP,
@@ -28,16 +29,35 @@ class SelectionAreaLocator extends ListLocator {
       return { x: (hand.x ?? 0) - centerOffset, y: (hand.y ?? 0) - SELECTION_Y_OFFSET * scale }
     }
     if (isSoloOpponent(playerIndex, context)) {
-      // The sole opponent's (2-player game) sits above their full-size hand too, just tighter (less room there than below mine).
-      return { x: (hand.x ?? 0) - centerOffset, y: (hand.y ?? 0) - SOLO_OPPONENT_SELECTION_Y_OFFSET }
+      // The sole opponent's (2-player game) is the mirror of mine: below their full-size hand, which hangs from their panel at the top.
+      return { x: (hand.x ?? 0) - centerOffset, y: (hand.y ?? 0) + SOLO_OPPONENT_SELECTION_Y_OFFSET }
     }
-    // Sits left of the captured pile's current (fanning) leftmost edge, following it as it grows, so the two never overlap.
-    const capturedLocation = { ...location, type: LocationType.PlayerCapturedDragon }
-    const captured = playerCapturedDragonLocator.getCoordinates(capturedLocation, context)
-    const capturedCount = playerCapturedDragonLocator.countListItems(capturedLocation, context)
-    const { x: capturedGapX = 0 } = playerCapturedDragonLocator.getGap()
-    const capturedLeftEdge = (captured.x ?? 0) + capturedGapX * Math.max(0, capturedCount - 1)
-    return { x: capturedLeftEdge - OPPONENT_SELECTION_CAPTURED_GAP - centerOffset, y: hand.y }
+    // Sits left of the captured piles' leftmost edge, on the panel's own row (not the hand's, which peeks out
+    // slightly above it). The offset follows the *largest* pile, so every opponent's selection lines up on the
+    // same x, wherever their own pile currently ends.
+    return { x: this.getCapturedLeftEdge(context) - OPPONENT_SELECTION_CAPTURED_GAP - centerOffset, y: getPanelRowY(playerIndex, context) }
+  }
+
+  /**
+   * x of the leftmost captured card the selections have to clear: the last card of the biggest *opponent* pile (they
+   * all fan out from the same x, under their own panel). The bottom row's own pile is left out, as no selection is
+   * ever displayed next to it (mine sits on the other side of the table). Asked to the locator itself rather than
+   * recomputed, since the fan stops growing past OPPONENT_CAPTURED_MAX_FAN cards.
+   */
+  private getCapturedLeftEdge(context: MaterialContext): number {
+    const opponentPiles = context.rules.players
+      .filter((player) => getRelativePlayerIndex(context, player) !== 0)
+      .map((player) => ({ type: LocationType.PlayerCapturedDragon, player }))
+    let fullestPile = opponentPiles[0]
+    let cards = 0
+    for (const pile of opponentPiles) {
+      const count = playerCapturedDragonLocator.countListItems(pile, context)
+      if (count > cards) {
+        cards = count
+        fullestPile = pile
+      }
+    }
+    return playerCapturedDragonLocator.getLocationCoordinates(fullestPile, context, Math.max(0, cards - 1)).x
   }
 
   getScale(location: Location, context: MaterialContext): number {
@@ -45,12 +65,11 @@ class SelectionAreaLocator extends ListLocator {
     return playerIndex === 0 || isSoloOpponent(playerIndex, context) ? 1 : OPPONENT_SCALE
   }
 
-  /** Position also depends on the captured pile's size (it follows the pile's leftmost edge for opponents) and player count (2-player layout). */
+  /** Position also depends on the biggest captured pile (opponents' selections all follow its leftmost edge) and player count (2-player layout). */
   getPositionDependencies(location: Location, context: MaterialContext) {
-    const capturedLocation = { ...location, type: LocationType.PlayerCapturedDragon }
     return {
       own: this.countItems(location, context),
-      captured: playerCapturedDragonLocator.countItems(capturedLocation, context),
+      captured: this.getCapturedLeftEdge(context),
       players: context.rules.players.length
     }
   }

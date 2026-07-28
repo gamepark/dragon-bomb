@@ -1,11 +1,10 @@
 import { Locator, MaterialContext } from '@gamepark/react-game'
 import { Location } from '@gamepark/rules-api'
-import { dragonRowY, getDragonHeadX, getRowSize } from './rowSize'
+import { dragonRowY, getDragonHeadX } from './rowSize'
 
 class DragonHeadSlotLocator extends Locator {
   getCoordinates(_location: Location, context: MaterialContext) {
-    const rowSize = getRowSize(context.rules.players.length)
-    return { x: getDragonHeadX(rowSize), y: dragonRowY }
+    return { x: getDragonHeadX(context.rules.players.length), y: dragonRowY }
   }
 
   getPositionDependencies(_location: Location, context: MaterialContext) {

@@ -5,7 +5,7 @@ import { Location } from '@gamepark/rules-api'
 class BombingZoneLocator extends ListLocator {
   parentItemType = MaterialType.DragonCard
   positionOnParent = { x: 50, y: 120 }
-  gap = { y: 1.5 }
+  gap = { y: 2 }
   coordinates = { y: 3 }
 
   getPositionDependencies(location: Location, context: MaterialContext) {

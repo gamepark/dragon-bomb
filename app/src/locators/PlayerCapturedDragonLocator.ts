@@ -50,3 +50,33 @@ class PlayerCapturedDragonLocator extends ListLocator {
 }
 
 export const playerCapturedDragonLocator = new PlayerCapturedDragonLocator()
+
+/** How far left of its final spot a captured card lands before sliding into the pile (see GameAnimations). */
+const CAPTURED_APPROACH_X = -8
+
+/**
+ * Animation-only locators (never registered in Locators.ts): they place the Dragon card being captured on the
+ * trajectory waypoints of its flight to the pile (see GameAnimations). Waypoints are computed from the state
+ * *before* the move, which does not hold the captured card yet, hence the +1: without it the fan would be
+ * spread over one card too few and the card would jump on landing once the pile is past OPPONENT_CAPTURED_MAX_FAN.
+ */
+class CapturedDragonFlightLocator extends PlayerCapturedDragonLocator {
+  constructor(private readonly xOffset = 0) {
+    super()
+  }
+
+  countListItems(location: Location, context: MaterialContext): number {
+    return super.countListItems(location, context) + 1
+  }
+
+  getCoordinates(location: Location, context: MaterialContext) {
+    const coordinates = super.getCoordinates(location, context)
+    return { ...coordinates, x: coordinates.x + this.xOffset }
+  }
+}
+
+/** Where a captured card comes to a stop, aligned with its final spot but further out, before sliding in. */
+export const capturedDragonApproachLocator = new CapturedDragonFlightLocator(CAPTURED_APPROACH_X)
+
+/** Where a captured card finally lands: exactly where playerCapturedDragonLocator is about to render it. */
+export const capturedDragonLandingLocator = new CapturedDragonFlightLocator()

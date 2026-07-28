@@ -2,7 +2,7 @@ import { FirecrackerCard } from '@gamepark/dragon-bomb/material/FirecrackerCard'
 import { LocationType } from '@gamepark/dragon-bomb/material/LocationType'
 import { MaterialType } from '@gamepark/dragon-bomb/material/MaterialType'
 import { CardDescription, ItemContext } from '@gamepark/react-game'
-import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import back from '../images/cards/firecracker/FirecrackerBack.jpg'
 import doubleFirecracker1 from '../images/cards/firecracker/DoubleFirecracker_1.jpg'
 import doubleFirecracker2 from '../images/cards/firecracker/DoubleFirecracker_2.jpg'
@@ -50,6 +50,7 @@ import stringOfFirecrackers3 from '../images/cards/firecracker/StringOfFirecrack
 import stringOfFirecrackers4 from '../images/cards/firecracker/StringOfFirecrackers_4.jpg'
 import stringOfFirecrackers5 from '../images/cards/firecracker/StringOfFirecrackers_5.jpg'
 import { FirecrackerCardHelp } from './help/FirecrackerCardHelp'
+import { PlayFirecrackerButton } from './PlayFirecrackerButton'
 
 class FirecrackerCardDescription extends CardDescription<number, MaterialType, number, FirecrackerCard> {
   width = 6.3
@@ -107,8 +108,20 @@ class FirecrackerCardDescription extends CardDescription<number, MaterialType, n
 
   backImage = back
 
-  canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    return isMoveItemType(MaterialType.FirecrackerCard)(move) && move.itemIndex === context.index && move.location.type === LocationType.SelectionArea
+  // Buttons are always shown (rather than only on hover/selection) so the play action stays
+  // reachable on touch devices, exactly like the card's short click used to be.
+  menuAlwaysVisible = true
+
+  // A single click on the card always opens its help (see `displayHelp` default behaviour) -
+  // playing the card is only ever done through the button below, never accidentally on click.
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const chooseMove = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.FirecrackerCard)(move) && move.itemIndex === context.index && move.location.type === LocationType.SelectionArea
+    )
+    if (!chooseMove) return null
+    // Above the card's top-left corner, over the power number printed there (half the height
+    // plus the button's own half-size and a small gap; ~16% of the width in from the left edge).
+    return <PlayFirecrackerButton move={chooseMove} x={-this.width * 0.34} y={-(this.height / 2 + 1.4)} />
   }
 }
 

@@ -1,4 +1,6 @@
 {
+  "button.choose-firecracker": "Choisir cette carte",
+
   "header.choose-firecracker.you": "Choisissez une carte Pétard et placez-la face cachée",
   "header.choose-firecracker.player": "{player} doit choisir une carte Pétard",
   "header.choose-firecracker.players": "Les joueurs choisissent une carte Pétard",

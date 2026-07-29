@@ -1,4 +1,4 @@
-import { isStartRule, MaterialGame } from '@gamepark/rules-api'
+import { isMoveItem, isStartRule, MaterialGame } from '@gamepark/rules-api'
 import { describe, expect, test } from 'vitest'
 import { DragonCard } from '../material/DragonCard'
 import { FirecrackerCard } from '../material/FirecrackerCard'
@@ -41,5 +41,21 @@ describe('PlaceRocketRule', () => {
     const moves = rules.onRuleStart()
     expect(g.memory[Memory.NextRocketRank]).toBe(1)
     expect(moves.some((move) => isStartRule(move) && move.id === RuleId.CompleteDragonRow)).toBe(true)
+  })
+
+  test('un seul corps de dragon restant : place automatiquement la Fusée dessus', () => {
+    const g = game({
+      rule: { id: RuleId.PlaceRocket, player: 1 },
+      items: {
+        [MaterialType.DragonCard]: [{ id: DragonCard.Body5, location: { type: LocationType.DragonRow, x: 0 } }],
+        [MaterialType.FirecrackerCard]: [{ id: FirecrackerCard.Rocket_1, location: { type: LocationType.SelectionArea, player: 1, rotation: false } }]
+      },
+      memory: { [Memory.NextRocketRank]: 0, [Memory.RocketOrder]: [0] }
+    })
+    const moves = new PlaceRocketRule(g).onRuleStart()
+    expect(moves).toHaveLength(1)
+    const move = moves[0]
+    expect(isMoveItem(move) && move.itemType === MaterialType.FirecrackerCard && move.itemIndex === 0).toBe(true)
+    expect(isMoveItem(move) && move.location.type === LocationType.BombingZone && move.location.parent === 0).toBe(true)
   })
 })

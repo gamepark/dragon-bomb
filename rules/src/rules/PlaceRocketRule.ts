@@ -10,11 +10,24 @@ import { Memory } from './Memory'
  */
 export class PlaceRocketRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
+    const slots = this.material(MaterialType.DragonCard).location(LocationType.DragonRow)
+
     // No Dragon slot left to choose from this round: skip this Rocket rather than leave the player stuck.
-    if (!this.material(MaterialType.DragonCard).location(LocationType.DragonRow).length) {
+    if (!slots.length) {
       this.memorize(Memory.NextRocketRank, (this.remind<number>(Memory.NextRocketRank) ?? 0) + 1)
       return nextDistributionStep(this)
     }
+
+    // Only one Dragon slot left: no real choice, so place the Rocket there automatically.
+    if (slots.length === 1) {
+      const rank = this.remind<number>(Memory.NextRocketRank) ?? 0
+      const cardIndex = this.remind<number[]>(Memory.RocketOrder)?.[rank]
+      if (cardIndex !== undefined) {
+        const slotIndex = slots.getIndex()
+        return [this.material(MaterialType.FirecrackerCard).index(cardIndex).moveItem({ type: LocationType.BombingZone, parent: slotIndex })]
+      }
+    }
+
     return []
   }
 

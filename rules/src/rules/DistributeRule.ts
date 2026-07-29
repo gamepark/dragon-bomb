@@ -1,4 +1,4 @@
-import { isMoveItemType, isMoveItemTypeAtOnce, isShuffleItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, isShuffleItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { FirecrackerCard, isStringOfFirecrackers } from '../material/FirecrackerCard'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -46,9 +46,7 @@ export class DistributeRule extends PlayerTurnRule {
   }
 
   continueChapeletDraw(move: ItemMove, slotIndex: number): MaterialMove[] {
-    if (isMoveItemTypeAtOnce(MaterialType.FirecrackerCard)(move) && move.location.type === LocationType.FirecrackerDeck) {
-      return [this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck).shuffle()]
-    }
+    // The deck was empty: the draw was postponed until DragonBombRules refilled it from the discard.
     if (isShuffleItemType(MaterialType.FirecrackerCard)(move)) {
       return this.drawChapeletBonus(slotIndex)
     }
@@ -68,12 +66,11 @@ export class DistributeRule extends PlayerTurnRule {
     this.memorize(Memory.ChapeletDrawSlot, slotIndex)
     const deck = this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck)
     if (deck.length === 0) {
-      const discard = this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDiscard)
-      if (!discard.length) {
-        this.forget(Memory.ChapeletDrawSlot)
-        return resolveSlot(this, slotIndex)
-      }
-      return [discard.moveItemsAtOnce({ type: LocationType.FirecrackerDeck }), discard.shuffle()]
+      // DragonBombRules refills the deck from the discard as soon as it empties: wait for the shuffle
+      // (continueChapeletDraw resumes the draw), unless there is no card left anywhere at all.
+      if (this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDiscard).length) return []
+      this.forget(Memory.ChapeletDrawSlot)
+      return resolveSlot(this, slotIndex)
     }
     return [deck.deck().dealOne(() => ({ type: LocationType.BombingZone, parent: slotIndex, rotation: true }))]
   }

@@ -36,9 +36,8 @@ export class EndOfRoundRule extends SimultaneousRule {
       return [this.material(MaterialType.DragonCard).location(LocationType.DragonDeck).shuffle()]
     }
     if (isShuffleItemType(MaterialType.DragonCard)(move)) return this.resetFirecrackerCards()
-    if (isMoveItemTypeAtOnce(MaterialType.FirecrackerCard)(move) && move.location.type === LocationType.FirecrackerDeck) {
-      return [this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck).shuffle()]
-    }
+    // The Firecracker deck shuffles itself once the cards land in it, see
+    // {@link DragonBombRules.refillFirecrackerDeck}.
     if (isShuffleItemType(MaterialType.FirecrackerCard)(move)) return this.dealNewRound()
     return []
   }

@@ -17,15 +17,16 @@ export class CompleteDragonRowRule extends SimultaneousRule {
     const missing = this.rowSize - this.material(MaterialType.DragonCard).location(LocationType.DragonRow).length
     if (missing === 0) return [this.startRule(RuleId.CompletePlayersHands)]
 
-    // Not enough Dragon cards left to fill every empty slot: the round ends immediately (see EndOfRoundRule).
-    if (this.material(MaterialType.DragonCard).location(LocationType.DragonDeck).length < missing) {
-      return [this.startSimultaneousRule(RuleId.EndOfRound)]
+    const deck = this.material(MaterialType.DragonCard).location(LocationType.DragonDeck)
+
+    // Not enough Dragon cards left to fill every empty slot: the round ends immediately (see
+    // EndOfRoundRule). The last cards are still dealt into the row, so players plainly see the deck
+    // run out - which is the reason the round is over.
+    if (deck.length < missing) {
+      return [...deck.deck().deal({ type: LocationType.DragonRow }, deck.length), this.startSimultaneousRule(RuleId.EndOfRound)]
     }
 
-    return [
-      ...this.material(MaterialType.DragonCard).location(LocationType.DragonDeck).deck().deal({ type: LocationType.DragonRow }, missing),
-      this.startRule(RuleId.CompletePlayersHands)
-    ]
+    return [...deck.deck().deal({ type: LocationType.DragonRow }, missing), this.startRule(RuleId.CompletePlayersHands)]
   }
 
   getActivePlayerLegalMoves(): MaterialMove[] {

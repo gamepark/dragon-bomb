@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/dragon-bomb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The rules of Dragon Bomb adapted for Game Park",
   "sideEffects": false,
   "type": "module",

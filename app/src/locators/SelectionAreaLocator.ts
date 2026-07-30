@@ -57,7 +57,7 @@ class SelectionAreaLocator extends ListLocator {
         fullestPile = pile
       }
     }
-    return playerCapturedDragonLocator.getLocationCoordinates(fullestPile, context, Math.max(0, cards - 1)).x
+    return playerCapturedDragonLocator.getLocationCoordinates(fullestPile, context, Math.max(0, cards - 1)).x ?? 0
   }
 
   getScale(location: Location, context: MaterialContext): number {

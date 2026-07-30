@@ -18,5 +18,11 @@ export enum Memory {
   /** Dragon Row item index whose slot just reached its vitality, awaiting ExplosionRule to resolve it */
   ExplodingSlot,
   /** Slot awaiting a "Chapelet de pétards" bonus draw to land, see DistributeRule */
-  ChapeletDrawSlot
+  ChapeletDrawSlot,
+  /**
+   * Dragon card item indexes captured with a "Double pétard" this round, i.e. whose victory points counted
+   * double (see ExplosionRule). Display only - the score is already up to date - so that a "x2" marker can be
+   * shown next to the captured card (see PlayerDoubleMarkerLocator) until the round ends (see EndOfRoundRule).
+   */
+  DoubledCaptures
 }

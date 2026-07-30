@@ -22,6 +22,7 @@
   "log.place-rocket": "{player} place sa <card/> sous le corps de dragon ({vitality})",
   "log.chapelet-bonus": "Chapelet de pétards : une carte supplémentaire est piochée <card/>",
   "log.explosion": "{player} fait exploser le corps de dragon et remporte <card/> ({points} points)",
+  "log.explosion-double": "{player} fait exploser le corps de dragon et remporte <card/> (Double pétard : {points} points)",
 
   "help.dragon-card.title": "Carte Corps de Dragon",
   "help.dragon-card.decoration.title": "Carte Dragon",

@@ -25,6 +25,11 @@ export class EndOfRoundRule extends SimultaneousRule {
     const gameOver = this.game.players.some((player) => (this.remind<number>(Memory.Score, player) ?? 0) >= WINNING_SCORE)
     if (gameOver) return [this.endGame()]
 
+    // The "x2" markers only last for the round they were earned in: they are forgotten as the captured piles
+    // they hang from go back into the deck (see Memory.DoubledCaptures). When the game ends instead, they are
+    // kept, so the final table still shows how the scores were made.
+    this.forget(Memory.DoubledCaptures)
+
     return this.resetDragonCards()
   }
 

@@ -19,7 +19,7 @@ export enum LocationType {
   SelectionArea,
   /** Dragon Body cards captured by a player, kept face up in front of them */
   PlayerCapturedDragon,
-  /** A Double Firecracker card kept face down in front of a player, marking a captured card's doubled victory points (location.parent = index of the captured DragonCard item) */
+  /** UI-only: "x2" marker displayed next to a Dragon card captured with a Double Firecracker (location.player = its owner, location.x = its rank in their captured pile), no item ever goes there (see Memory.DoubledCaptures) */
   PlayerDoubleMarker,
   /** UI-only: a player's info panel (avatar, name, score), displayed as part of the table so it scales with it (location.player = the player it belongs to) */
   PlayerPanel

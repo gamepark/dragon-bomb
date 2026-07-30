@@ -27,11 +27,11 @@ export const OPPONENT_CAPTURED_MAX_FAN = 10
 /** Each captured card slides slightly behind the previous one, so its own left edge stays visible. */
 export const OPPONENT_CAPTURED_FAN_DELTA_Z = -0.1
 
-/** z of a double marker pile: the deepest card of a full fan lands exactly on 0, since negative z are not allowed. */
-export const OPPONENT_DOUBLE_MARKER_Z = -OPPONENT_CAPTURED_FAN_DELTA_Z * (OPPONENT_CAPTURED_MAX_FAN - 1)
+/** z of a captured pile: the deepest card of a full fan lands exactly on 0, since negative z are not allowed. */
+export const OPPONENT_CAPTURED_Z = -OPPONENT_CAPTURED_FAN_DELTA_Z * (OPPONENT_CAPTURED_MAX_FAN - 1)
 
-/** z of a captured pile: one step above the markers, which are laid under the card they belong to. */
-export const OPPONENT_CAPTURED_Z = OPPONENT_DOUBLE_MARKER_Z + 1
+/** z of the "x2" markers: above the whole fan, so a marker never ends up behind the card fanned over the one it belongs to. */
+export const OPPONENT_DOUBLE_MARKER_Z = OPPONENT_CAPTURED_Z + 1
 
 /** x offset (from the dragon head card) of my own hand: just right of it, under the end of the row. */
 const MY_HAND_X_OFFSET = 4

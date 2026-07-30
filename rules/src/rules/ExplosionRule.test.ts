@@ -61,7 +61,7 @@ describe('ExplosionRule', () => {
     expect(rules.remind<number>(Memory.Score, 1)).toBe(-3)
   })
 
-  test('Double Pétard déclenchant : double les points, crée un marqueur, aucune carte à défausser en trop', () => {
+  test('Double Pétard déclenchant : double les points, mémorise la capture doublée, et se défausse comme les autres', () => {
     const g = game({
       rule: { id: RuleId.Explosion, player: 2 },
       items: {
@@ -74,15 +74,17 @@ describe('ExplosionRule', () => {
     const rules = new ExplosionRule(g)
     const moves = rules.onRuleStart()
 
-    // La seule carte posée est la carte déclenchante elle-même : rien d'autre à défausser.
-    expect(moves.some((move) => isMoveItemsAtOnce(move) && move.itemType === MaterialType.FirecrackerCard)).toBe(false)
-
-    const marker = moves.find((move) => isMoveItem(move) && move.location.type === LocationType.PlayerDoubleMarker)
-    expect(marker).toBeDefined()
-    if (isMoveItem(marker!)) {
-      expect(marker.location).toEqual({ type: LocationType.PlayerDoubleMarker, player: 2, parent: 0 })
+    // Le Double Pétard part à la défausse comme n'importe quel pétard : il ne reste aucune carte devant le joueur.
+    const discard = moves.find((move) => isMoveItemsAtOnce(move) && move.itemType === MaterialType.FirecrackerCard)
+    expect(discard).toBeDefined()
+    if (isMoveItemsAtOnce(discard!)) {
+      expect(discard.indexes).toEqual([0])
+      expect(discard.location.type).toBe(LocationType.FirecrackerDiscard)
     }
+    expect(moves.some((move) => isMoveItem(move) && move.location.type === LocationType.PlayerDoubleMarker)).toBe(false)
 
     expect(rules.remind<number>(Memory.Score, 2)).toBe(6)
+    // Le x2 est mémorisé (index de la carte Dragon capturée) pour être affiché jusqu'à la fin de la manche.
+    expect(rules.remind<number[]>(Memory.DoubledCaptures)).toEqual([0])
   })
 })

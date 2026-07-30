@@ -60,8 +60,7 @@ export class DragonBombRules
     [MaterialType.FirecrackerCard]: {
       [LocationType.FirecrackerDeck]: hideItemId,
       [LocationType.PlayerHand]: hideItemIdToOthers,
-      [LocationType.SelectionArea]: hideUnrevealedSelection,
-      [LocationType.PlayerDoubleMarker]: hideItemId
+      [LocationType.SelectionArea]: hideUnrevealedSelection
     }
   }
 
@@ -76,8 +75,7 @@ export class DragonBombRules
       [LocationType.FirecrackerDiscard]: new PositiveSequenceStrategy(),
       [LocationType.PlayerHand]: new PositiveSequenceStrategy(),
       [LocationType.SelectionArea]: new PositiveSequenceStrategy(),
-      [LocationType.BombingZone]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerDoubleMarker]: new PositiveSequenceStrategy()
+      [LocationType.BombingZone]: new PositiveSequenceStrategy()
     }
   }
 

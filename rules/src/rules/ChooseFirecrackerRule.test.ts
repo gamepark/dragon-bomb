@@ -59,4 +59,13 @@ describe('ChooseFirecrackerRule', () => {
     const consequences = rules.afterItemMove(selectionMove(1))
     expect(consequences.some((move) => isEndPlayerTurn(move) && move.player === 1)).toBe(true)
   })
+
+  test("ne redéclenche pas endPlayerTurn pour un joueur déjà inactif (moves de révélation)", () => {
+    const g = game([1, 2, 3], [FirecrackerCard.Firecracker5_1])
+    g.items[MaterialType.FirecrackerCard]![0].location = { type: LocationType.SelectionArea, player: 1 }
+    g.rule!.players = [] // player 1 already ended their turn before reveal moves are played
+    const rules = new ChooseFirecrackerRule(g)
+    const consequences = rules.afterItemMove(selectionMove(0))
+    expect(consequences).toHaveLength(0)
+  })
 })

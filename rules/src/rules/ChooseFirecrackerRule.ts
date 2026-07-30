@@ -27,6 +27,7 @@ export class ChooseFirecrackerRule extends SimultaneousRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.FirecrackerCard)(move) || move.location.type !== LocationType.SelectionArea) return []
     const player = move.location.player!
+    if (!this.isTurnToPlay(player)) return []
     const chosen = this.material(MaterialType.FirecrackerCard).location(LocationType.SelectionArea).player(player).length
     return chosen >= this.cardsToChoose ? [this.endPlayerTurn(player)] : []
   }

@@ -61,7 +61,7 @@ export class EndOfRoundRule extends SimultaneousRule {
 
     const firecrackerDeck = this.material(MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck).deck()
     for (const player of this.game.players) {
-      moves.push(...firecrackerDeck.deal({ type: LocationType.PlayerHand, player }, getHandLimit(this, player)))
+      moves.push(firecrackerDeck.dealAtOnce({ type: LocationType.PlayerHand, player }, getHandLimit(this, player)))
     }
 
     moves.push(this.startSimultaneousRule(RuleId.ChooseFirecracker))

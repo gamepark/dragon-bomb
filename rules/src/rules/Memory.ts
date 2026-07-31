@@ -9,7 +9,7 @@ export enum Memory {
   PlacementPlayers,
   /** Index in PlacementOrder/PlacementPlayers of the next card to place (see DistributeRule) */
   NextRank,
-  /** Rocket Firecracker item indexes committed this round, placed last (see ChooseFirecrackerRule, PlaceRocketRule) */
+  /** Rocket Firecracker item indexes committed this round, placed last, in ascending lantern order (see ChooseFirecrackerRule, PlaceRocketRule) */
   RocketOrder,
   /** Player owning each entry of RocketOrder, same order (see ChooseFirecrackerRule) */
   RocketPlayers,

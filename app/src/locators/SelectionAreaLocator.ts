@@ -25,7 +25,9 @@ class SelectionAreaLocator extends ListLocator {
     const playerIndex = getRelativePlayerIndex(context, location.player)
     const scale = this.getScale(location, context)
     const { x: gapX = 0 } = this.getGap(location, context)
-    const count = this.countListItems(location, context)
+    // An empty area is centered like a single card: it is the drop zone shown before the first card is committed
+    // (and the placeholder highlighted by the tutorial), so it must sit exactly where that card will land.
+    const count = Math.max(1, this.countListItems(location, context))
     const centerOffset = (gapX * (count - 1)) / 2
     if (playerIndex === 0) {
       // Mine sits above my hand, both shifted left so it lines up under the dragon head.

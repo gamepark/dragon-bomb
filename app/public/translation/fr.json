@@ -61,5 +61,26 @@
   "help.rule.end-of-game.title": "Fin de partie",
   "help.rule.end-of-game.desc": "La partie se termine dès qu'un joueur atteint 50 points ou plus à la fin d'une manche. Le joueur avec le plus de points remporte la partie. En cas d'égalité, celui qui possède le moins de cartes Corps de Dragon l'emporte ; en cas de nouvelle égalité, tous les joueurs à égalité sont déclarés vainqueurs.",
   "help.rule.two-players.title": "Variante à 2 joueurs",
-  "help.rule.two-players.desc": "Le corps du dragon ne comporte que 4 cartes, la limite de cartes en main est de 4, et chaque joueur choisit et joue 2 cartes Pétard par tour au lieu d'une seule."
+  "help.rule.two-players.desc": "Le corps du dragon ne comporte que 4 cartes, la limite de cartes en main est de 4, et chaque joueur choisit et joue 2 cartes Pétard par tour au lieu d'une seule.",
+
+  "tuto.welcome": "Bienvenue sur le tutoriel de <bold>Dragon Bomb</bold>.\n\nDragon Bomb est une célébration du peuple Hakka qui a lieu à Miaoli (Taïwan), pendant le Festival des Lanternes.",
+  "tuto.goal": "Dans ce jeu, votre objectif est d'obtenir des cartes <bold>Corps de Dragon</bold>.",
+  "tuto.secret-choice": "Pour obtenir les cartes <bold>Corps de Dragon</bold>, à chaque tour chaque joueur choisit secrètement une <bold>carte Pétard</bold> de sa main.",
+  "tuto.choose-mine": "Choisissez cette carte en la glissant ici.",
+  "tuto.reveal": "Les cartes Pétard choisies sont révélées.",
+  "tuto.place-first": "Le joueur ayant joué la <bold>carte Pétard</bold> de plus faible <bold>puissance</bold> commence : DuGeWei place son Pétard de puissance 5 dans la <bold>Zone de Bombardement</bold>, sous le premier Corps de Dragon, à gauche.",
+  "tuto.place-second": "Yu-Cin Huang continue et place son Pétard de puissance 7 dans la seconde colonne.",
+  "tuto.place-third": "Enfin, vous placez votre Pétard de puissance 10 dans la dernière colonne.",
+  "tuto.round2": "Une nouvelle manche commence. Choisissez cette carte.",
+  "tuto.place-lowest-first": "Vous avez joué le Pétard de plus faible puissance, vous le placez en premier.",
+  "tuto.chapelet-effect": "Certains Pétards ont un <bold>effet spécial</bold>. Lorsque le <bold>Chapelet de Pétards</bold> est joué, piochez une carte Pétard et ajoutez-la dans la Zone de Bombardement.",
+  "tuto.vitality-points": "Chaque Corps de Dragon a des <bold>points de vitalité</bold> (11 pour celle-ci), et des <bold>points de Victoire</bold> (3 ici).",
+  "tuto.explosion-rule": "Dès que la puissance des Pétards est supérieure ou égale aux <bold>points de vitalité</bold> de la carte Corps de Dragon, le joueur ayant joué le dernier Pétard obtient cette carte.",
+  "tuto.tie-break": "Lorsque 2 joueurs jouent des Pétards de même puissance, celui qui possède <bold>le moins de lanternes</bold> sur sa carte commence.",
+  "tuto.dugewei-wins": "DuGeWei remporte ce Corps de Dragon.",
+  "tuto.special-firecrackers": "Les cartes Pétard 1, 2 et 3 ont chacune un <bold>effet spécial</bold> : cliquez sur une carte pour connaître son effet !",
+  "tuto.special-dragons": "Les cartes Corps de Dragon 4 et 13 sont spéciales : cliquez dessus pour connaître leur particularité.",
+  "tuto.end-of-round": "La manche s'arrête lorsqu'il n'y a plus assez de cartes Corps de Dragon pour compléter le dragon : les joueurs gagnent alors les points de victoire des cartes Corps de Dragon qu'ils ont obtenues au cours de la manche.",
+  "tuto.end-of-game": "La partie se termine lorsqu'un joueur atteint 50 points ou plus à la fin d'une manche. Le joueur avec le plus de points l'emporte !",
+  "tuto.go": "À vous de jouer à présent, amusez-vous bien !"
 }

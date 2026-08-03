@@ -11,8 +11,11 @@ import {
   SELECTION_Y_OFFSET,
   SOLO_OPPONENT_SELECTION_Y_OFFSET
 } from './PlayerRowLayout'
+import { selectionAreaDescription } from './SelectionAreaDescription'
 
 class SelectionAreaLocator extends ListLocator {
+  locationDescription = selectionAreaDescription
+
   getGap(location: Location, context: MaterialContext): Partial<Coordinates> {
     return { x: 7 * this.getScale(location, context) }
   }

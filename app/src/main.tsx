@@ -12,6 +12,7 @@ import { Locators } from './locators/Locators'
 import { Material } from './material/Material'
 import { DragonBombRuleHelp } from './material/help/DragonBombRuleHelp'
 import { theme } from './theme'
+import { Tutorial } from './tutorial/Tutorial'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
       rulesHelp={{ [RuleId.ChooseFirecracker]: DragonBombRuleHelp }}
       logs={new DragonBombLogDescription()}
       theme={theme}
+      tutorial={new Tutorial()}
     >
       <App />
     </GameProvider>

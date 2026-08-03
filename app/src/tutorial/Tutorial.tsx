@@ -145,7 +145,10 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: { text: () => <Trans i18nKey="tuto.chapelet-effect" components={{ bold: <strong /> }} /> },
       focus: (game) => ({
-        materials: [this.material(game, MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck)]
+        materials: [
+          this.material(game, MaterialType.FirecrackerCard).id(FirecrackerCard.StringOfFirecrackers_1),
+          this.material(game, MaterialType.FirecrackerCard).location(LocationType.FirecrackerDeck)
+        ]
       }),
       move: { interrupt: (move) => isStartRule(move) && move.id === RuleId.Explosion }
     },

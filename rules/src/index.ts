@@ -1,3 +1,3 @@
 export { DragonBombRules } from './DragonBombRules'
-export { DragonBombOptionsSpec } from './DragonBombOptions'
+export { DragonBombOptionsSpecV2 } from './DragonBombOptions'
 export { DragonBombSetup } from './DragonBombSetup'

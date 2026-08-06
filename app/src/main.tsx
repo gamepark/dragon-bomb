@@ -1,4 +1,4 @@
-import { DragonBombOptionsSpec } from '@gamepark/dragon-bomb/DragonBombOptions'
+import { DragonBombOptionsSpecV2 } from '@gamepark/dragon-bomb/DragonBombOptions'
 import { DragonBombRules } from '@gamepark/dragon-bomb/DragonBombRules'
 import { DragonBombSetup } from '@gamepark/dragon-bomb/DragonBombSetup'
 import { RuleId } from '@gamepark/dragon-bomb/rules/RuleId'
@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')!).render(
     <GameProvider
       game="dragon-bomb"
       Rules={DragonBombRules}
-      optionsSpec={DragonBombOptionsSpec}
+      optionsSpec={DragonBombOptionsSpecV2}
       GameSetup={DragonBombSetup}
       material={Material}
       locators={Locators}
